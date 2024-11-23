@@ -16,4 +16,10 @@ const userSchema = new Schema({
  }
 );
 
-export const eventCollection = model('chat', userSchema)
+userSchema.methods.toJSON = function () {
+    const obj = this.toObject();
+    delete obj.password;
+    return obj;
+  };
+
+export const userCollection = model('user', userSchema)
