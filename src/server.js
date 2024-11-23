@@ -6,7 +6,7 @@ import cors from 'cors';
 import { env } from './helpers/env.js';
 import errorHandler from './middleware/errorHandler.js'
 import notFoundHandler from './middleware/notFoundHandler.js'
-import router from './routes/eventRouter.js';
+import router from './routes/index.js';
 
 // support code
 const PORT = Number(env('PORT'));
