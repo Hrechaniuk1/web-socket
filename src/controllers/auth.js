@@ -1,6 +1,10 @@
 // custo imports
 import { THIRTY_DAYS } from "../constants/authConstants.js";
-import { doResetPassword, loginUser, logoutUser, refreshUser, registerUser, resetPassword } from "../services/auth.js";
+import {
+    // doResetPassword,
+    loginUser, logoutUser, refreshUser, registerUser,
+    //  resetPassword
+    } from "../services/auth.js";
 
 
 // support code
@@ -60,21 +64,21 @@ export const logoutUserController = async (req, res) => {
 
 };
 
-export const resetPasswordController = async (req, res) => {
-        await resetPassword(req.body.email);
-        res.status(200).json({
-            status: 200,
-            message: 'Reset password email was successfully sent!',
-            data: {},
-        });
+// export const resetPasswordController = async (req, res) => {
+//         await resetPassword(req.body.email);
+//         res.status(200).json({
+//             status: 200,
+//             message: 'Reset password email was successfully sent!',
+//             data: {},
+//         });
 
-};
+// };
 
-export const doResetPasswordController = async (req, res) => {
-    await doResetPassword(req.body);
-    res.status(200).json({
-        status: 200,
-        message: "Password has been successfully reset.",
-        data: {}
-    });
-};
+// export const doResetPasswordController = async (req, res) => {
+//     await doResetPassword(req.body);
+//     res.status(200).json({
+//         status: 200,
+//         message: "Password has been successfully reset.",
+//         data: {}
+//     });
+// };

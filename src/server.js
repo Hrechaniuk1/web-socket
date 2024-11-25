@@ -1,6 +1,7 @@
 // general imports
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // custom imports
 import { env } from './helpers/env.js';
@@ -18,7 +19,10 @@ export const setupServer = async () => {
 
     app.use(cors());
     app.use(express.json());
+    app.use(cookieParser());
+
     app.use(router);
+
     app.use('*', notFoundHandler);
 
     app.use(errorHandler);

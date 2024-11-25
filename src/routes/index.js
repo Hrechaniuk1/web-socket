@@ -1,5 +1,5 @@
 // custom imports
-import authRouter from './authRouter'
+import authRouter from '../routes/authRouter.js';
 
 // gen imports
 import { Router } from 'express';
