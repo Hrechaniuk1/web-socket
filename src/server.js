@@ -10,10 +10,10 @@ import { env } from './helpers/env.js';
 import errorHandler from './middleware/errorHandler.js'
 import notFoundHandler from './middleware/notFoundHandler.js'
 import router from './routes/index.js';
+import { wsRoute } from './routes/wsRouter.js';
 
 // support code
 const PORT = Number(env('PORT'));
-// const PORTWS = Number(env('PORTWS'))
 
 // server code
 
@@ -38,27 +38,7 @@ export const setupServer = async () => {
 
     // wss
     const wss = new WebSocketServer({server})
-
-    wss.on('connection', (ws) => {
-        console.log('New WebSocket client connected');
-
-        // Обработка полученных сообщений
-        ws.on('message', (message) => {
-            console.log('Received:', message);
-
-            // Рассылаем сообщение всем клиентам
-            wss.clients.forEach((client) => {
-                if (client.readyState === ws.OPEN) {
-                    client.send(message);
-                }
-            });
-        });
-
-        // Обработка отключений
-        ws.on('close', () => {
-            console.log('WebSocket client disconnected');
-        });
-    });
+    wsRoute(wss)
 
     // start server
 

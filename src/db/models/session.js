@@ -26,4 +26,12 @@ const sessionSchema = new Schema({
     versionKey: false,
 });
 
+sessionSchema.methods.isAccessTokenValid = function () {
+    return new Date() < this.accessTokenValidUntil;
+};
+
+sessionSchema.methods.isRefreshTokenValid = function () {
+    return new Date() < this.refreshTokenValidUntil;
+};
+
 export const sessionCollection = model('sessions', sessionSchema);

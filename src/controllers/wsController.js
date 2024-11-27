@@ -1,16 +1,31 @@
 // custom imports
 import { getChatHistory, saveMessage } from "../services/wsService";
+import { getUserById, validateAccessToken } from "../services/session";
 
 
 // server code
 
-export const handleConnection = async (ws, wss, user) => {
+export const wsController = async (ws, wss, req) => {
+
+    const accessToken = req.headers['sec-websocket-protocol'];
+    if (!accessToken) {
+        ws.close(1008, 'Unauthorized');
+        return;
+    }
+
+    try {
+
+        const userId = await validateAccessToken(accessToken);
+        const user = await getUserById(userId);
+        console.log(`User connected: ${user.username}`);
+
     // chat history
     const messages = await getChatHistory();
     ws.send(JSON.stringify({ event: 'chatHistory', data: messages }));
 
     // new messages
     ws.on('message', async (data) => {
+
         try {
             const { text } = JSON.parse(data);
 
@@ -47,4 +62,8 @@ export const handleConnection = async (ws, wss, user) => {
     ws.on('close', () => {
         console.log(`User ${user.username} has gone`);
     });
+} catch (error) {
+    console.error('User unauthorized:', error);
+        ws.close(1008, 'Unauthorized');
+}
 };
