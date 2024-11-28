@@ -36,8 +36,10 @@ export const registerUser = async (data) => {
     const user = await usersCollection.findOne({email: data.email});
     if(user) throw createHttpError(409, 'Email in use');
 
-    const encryptedPassword = await bcrypt.hash(data.password, 10);
-    return await usersCollection.create({...data, password: encryptedPassword});
+    const {name, email, password} = data
+
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    return await usersCollection.create({name, email, password: encryptedPassword});
 };
 
 export const loginUser = async (data) => {

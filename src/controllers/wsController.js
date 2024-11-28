@@ -7,6 +7,8 @@ import { getUserById, validateAccessToken } from "../services/session";
 
 export const wsController = async (ws, wss, req) => {
 
+    // is authorized
+
     const accessToken = req.headers['sec-websocket-protocol'];
     if (!accessToken) {
         ws.close(1008, 'Unauthorized');

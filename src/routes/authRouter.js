@@ -4,6 +4,7 @@ import { Router } from "express";
 // custom imports
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { validateBody } from "../middleware/validateBody.js";
+import { registration } from "../middleware/registration.js";
 import { registerController,
     // resetPasswordController,
      refreshUserController, loginUserController, logoutUserController,
@@ -16,7 +17,7 @@ import { userLoginSchema, userValidationSchema,
 // server code
 const authRouter = Router();
 
-authRouter.post('/register', validateBody(userValidationSchema), ctrlWrapper(registerController));
+authRouter.post('/register', validateBody(userValidationSchema), registration, ctrlWrapper(registerController));
 authRouter.post('/login', validateBody(userLoginSchema), ctrlWrapper(loginUserController));
 authRouter.post('/refresh', ctrlWrapper(refreshUserController));
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
